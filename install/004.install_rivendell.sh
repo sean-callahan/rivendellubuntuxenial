@@ -2,7 +2,7 @@
 ### CONFIG CHANGE HERE ###
 RIVHTTP=http://www.rivendellaudio.org/ftpdocs/rivendell/
 #Make sure you use the tar.gz file not the zip
-RIVSRC=rivendell-2.13.0.tar.gz
+RIVSRC=rivendell-2.15.0.tar.gz
 ### DONT TOUCH BELOW HERE ###
 
 #Test for arguments
@@ -37,18 +37,6 @@ wget $RIVHTTP$RIVSRC
 tar -zxvf $RIVSRC
 rm $RIVSRC
 cd ${RIVSRC%.tar.gz}
-echo
-echo
-
-#Patch the create DB bug (Github issue #121)
-#@see https://github.com/ElvishArtisan/rivendell/issues/121
-patch rdadmin/createdb.cpp /home/$USER/install/rivendell/createdb.cpp.patch
-#Patch the old INSTANCE column bug (Github issue #129)
-patch rdadmin/createdb.cpp /home/$USER/install/rivendell/createdb.cpp-instance.patch
-#Patch the create user DB bug (Github issue #123)
-#@see https://github.com/ElvishArtisan/rivendell/issues/123
-patch rdadmin/opendb.cpp /home/$USER/install/rivendell/opendb.cpp.patch
-
 echo
 echo
 
@@ -116,10 +104,10 @@ echo Adding Rivendell Config to Apache...
 #Need to use Require granted since Apache 2.4
 #@see http://httpd.apache.org/docs/2.4/howto/access.html
 #@see https://github.com/ElvishArtisan/rivendell/issues/124
-patch /home/$USER/install/rivendell-2.13.0/conf/rd-bin.conf /home/$USER/install/rivendell/rd-bin.conf.patch
+patch /home/$USER/install/$RIVSRC/conf/rd-bin.conf /home/$USER/install/rivendell/rd-bin.conf.patch
 
 #Copy Rivendell web config to apache and enable
-cp /home/$USER/install/rivendell-2.13.0/conf/rd-bin.conf /etc/apache2/sites-available/
+cp /home/$USER/install/$RIVSRC/conf/rd-bin.conf /etc/apache2/sites-available/
 
 #Enable rd-bin and reload
 a2ensite rd-bin
@@ -130,7 +118,7 @@ a2enmod cgi
 service apache2 restart
 
 #Clean up Rivendell source folder
-rm -r /home/$USER/install/rivendell-2.13.0
+rm -r /home/$USER/install/$RIVSRC
 
 #MySQL Config
 #Amend MySQL to default to MyISAM (Required by Rivendell)
