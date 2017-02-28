@@ -52,24 +52,6 @@ if [ ! -f ./qt3/qvaluelist.h.patch ]; then
 fi
 
 #RIVENDELL
-#CREATEDB.CPP
-if [ ! -f ./rivendell/createdb.cpp.patch ]; then
-  echo rivendell/createdb.cpp.patch is not found, aborting
-  exit 1
-fi
-
-#CREATEDB.CPP Instance Patch
-if [ ! -f ./rivendell/createdb.cpp-instance.patch ]; then
-  echo rivendell/createdb.cpp-instance.patch is not found, aborting
-  exit 1
-fi
-
-#OPENDB.CPP
-if [ ! -f ./rivendell/opendb.cpp.patch ]; then
-  echo rivendell/opendb.cpp.patch is not found, aborting
-  exit 1
-fi
-
 #RD.CONF
 if [ ! -f ./rivendell/rd.conf-sample.patch ]; then
   echo rivendell/rd.conf-sample.patch is not found, aborting
